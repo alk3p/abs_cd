@@ -1,29 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% block title %}<title>ABS-CD</title>{% endblock title%}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% block style %} {% endblock style %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'cd_manager/base_abs-cd.css' %}">
-    <link rel="stylesheet" href="{% static 'cd_manager/navbar.css' %}">
-</head>
-<body>
-    <div id="navbar">
-        <div id="navbarlogo">
-            <h2>ArchBuildSystem CD</h2>
+    <head>
+        {% block title %}<title>Overview - ArchBuildSystem CD</title>{% endblock title%}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .success {
+                color: green;
+            }
+
+            .failed {
+                color: red;
+                font-weight: bold;
+            }
+
+            .not_built {
+                color: grey;
+            }
+
+            .console_output {
+                font-size: .846em;
+                padding: 1em;
+            }
+        </style>
+        {% block style %}
+        {% endblock style %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'cd_manager/archweb.0cac10eec648.css' %}">
+        <link rel="icon" type="image/x-icon" href="{% static 'cd_manager/favicon.29302f683ff8.ico' %}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'cd_manager/favicon.29302f683ff8.ico' %}" />
+    </head>
+    <body class="vsc-initialized">
+        <div id="archnavbar">
+            <div id="archnavbarlogo">
+                <h1><a href="/" title="Return to the main page">ArchBuildSystem CD</a></h1>
+            </div>
+            <div id="archnavbarmenu">
+                <ul id="archnavbarlist">
+                    <li id="abs-overview"><a href="{% url 'cd_manager:overview' %}">Overview</a></li>
+                </ul>
+            </div>
         </div>
-        <div id="navbarmenu">
-            <ul id="navbarlist">
-                <li><a href="{% url 'cd_manager:overview' %}">Overview</a></li>
-            </ul>
+        <div id="content">
+            <div id="archdev-navbar"></div>
+            {% block content %}
+            {% endblock content %}
         </div>
-    </div>
-    <div class="content">
-        {% block content %}
-            If you see this, something is wrong!
-        {% endblock content %}
-    </div>
-</body>
+    </body>
 </html>

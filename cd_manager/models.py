@@ -25,8 +25,10 @@ REPO_REMOVE_BIN = "/usr/bin/repo-remove"
 
 class Package(models.Model):
     BuildStatus = models.TextChoices(
-        'BuildStatus', 'SUCCESS FAILURE NOT_BUILT BUILDING PREPARING WAITING')
+        'BuildStatus', 'SUCCESS FAILED NOT_BUILT BUILDING PREPARING WAITING')
     name = models.CharField(max_length=100, primary_key=True)
+    version = models.CharField(max_length=80)
+    desc = models.TextField(null=True, blank=True)
     repo_url = models.CharField(max_length=100)
     makepkg_extra_args = models.CharField(max_length=255, blank=True)
     build_status = models.CharField(choices=BuildStatus.choices,
@@ -138,7 +140,7 @@ class Package(models.Model):
         self.build(force_rebuild=True)
 
     def build_failure(self):  # TODO: Enum for multiple failure types
-        self.build_status = 'FAILURE'  # TODO: More appropriate new error type
+        self.build_status = 'FAILED'  # TODO: More appropriate new error type
         self.save()
         raise RuntimeError(f"Building {self.name} failed.")
 

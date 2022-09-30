@@ -14,11 +14,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Package',
             fields=[
-                ('name', models.CharField(max_length=20, primary_key=True, serialize=False)),
-                ('repo_url', models.TextField(max_length=50)),
-                ('build_status', models.CharField(choices=[('SUCCESS', 'Success'), ('FAILURE', 'Failure'), ('NOT_BUILT', 'Not Built')], default='NOT_BUILT', max_length=10)),
-                ('build_date', models.DateTimeField(blank=True)),
-                ('build_output', models.TextField(blank=True)),
+                ('name', models.CharField(max_length=100, primary_key=True, serialize=False)),
+                ('version', models.CharField(max_length=80)),
+                ('desc', models.TextField(blank=True, null=True)),
+                ('repo_url', models.CharField(max_length=100)),
+                ('build_status', models.CharField(choices=[('SUCCESS', 'Success'), ('FAILED', 'Failed'), ('NOT_BUILT', 'Not Built'), ('BUILDING', 'Building')], default='NOT_BUILT', max_length=10)),
+                ('build_date', models.DateTimeField(blank=True, null=True)),
+                ('build_output', models.TextField(blank=True, null=True)),
             ],
         ),
     ]

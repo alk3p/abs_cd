@@ -18,6 +18,6 @@ class PackageOverview(SortableListView):
                            'build_status': {'default_direction': '',
                                             'verbose_name': 'Build status'},
                            'build_date': {'default_direction': '-',
-                                          'verbose_name': 'Build date'}
+                                          'verbose_name': 'Last updated'}
                            }
     default_sort_field = 'name'
