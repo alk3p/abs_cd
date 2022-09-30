@@ -36,6 +36,9 @@ class PackageSystem:
     # pkgbase should be type cd_manager.models.Package()
     def build(self, pkgbase):
         packages = ALPMHelper.get_srcinfo(pkgbase.name).getcontent()['pkgname']
+        pkgbase.version = ALPMHelper.get_srcinfo(pkgbase.name).getcontent()['pkgver'] \
+            + '-' + ALPMHelper.get_srcinfo(pkgbase.name).getcontent()['pkgrel']
+        pkgbase.desc = ALPMHelper.get_srcinfo(pkgbase.name).getcontent()['pkgdesc']
         container_output = None
         pkgbase.build_status = 'BUILDING'
         pkgbase.build_output = None
@@ -78,7 +81,7 @@ class PackageSystem:
             except subprocess.CalledProcessError as e:
                 logger.error(e.stdout)
         except docker.errors.ContainerError as e:
-            pkgbase.build_status = 'FAILURE'
+            pkgbase.build_status = 'FAILED'
             container_output = e.container.logs()
         finally:
             Connection().containers.get(container_name).remove()

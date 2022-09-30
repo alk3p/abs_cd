@@ -12,8 +12,8 @@ from cd_manager.models import Package
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'build_status',
-                    'build_date',
+    list_display = ('name', 'version', 'desc',
+                    'build_status', 'build_date',
                     'package_actions')
     search_fields = ("name", )
     ordering = ('name', )
