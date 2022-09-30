@@ -20,7 +20,15 @@
                     <td class="wrap">{{ package.desc }}</td>
                 </tr><tr>
                     <th>Upstream:</th>
+                    {% if 'ssh://' in package.repo_url %}
+                    <td>Private</td>
+                    {% elif 'aur.archlinux.org' in package.repo_url %}
+                    <td><a href="https://aur.archlinux.org/packages/{{ package.name }}" target="_blank" rel="noopener noreferrer">AUR</a></td>
+                    {% elif 'github.com' in package.repo_url %}
+                    <td><a href="{{ package.repo_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></td>
+                    {% else %}
                     <td><a href="{{ package.repo_url }}" target="_blank" rel="noopener noreferrer">{{ package.repo_url }}</a></td>
+                    {% endif %}
                 </tr>
             </tbody>
         </table>

@@ -93,14 +93,14 @@ def main():
             print_and_exit(2)
 
     # If subprocess.Popen(user=uid) is used, gpg auto-key-retrieve doesn't work
-    makepkg_args = ['su', '-c', "makepkg --force --syncdeps --noconfirm " +
+    makepkg_args = ['su', '-c', "makepkg --skippgpcheck --force --syncdeps --noconfirm " +
                     " ".join(makepkg_extra_flags), USERNAME]
     makepkg_proc = subprocess.run(makepkg_args, stdout=PIPE, stderr=STDOUT, encoding='UTF-8')
     log(makepkg_proc.stdout)
     if makepkg_proc.returncode != 0:
         print_and_exit(1)
 
-    built_packages = glob.glob(os.path.join(USERDIR, "*.pkg.tar.*"))
+    built_packages = glob.glob("/builder/.out/*")
     if not built_packages:
         log("No packages were built!")
         print_and_exit(1)

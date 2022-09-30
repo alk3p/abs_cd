@@ -7,6 +7,19 @@
 {% endblock style %}
 
 {% block content %}
+    <div id="intro" class="box">
+        <h2>Crystal - Yet another Arch Linux Repository</h2>
+
+        <p>You've reached the website for my personal <a href="https://archlinux.org" target="_blank" rel="noopener noreferrer">Arch Linux</a> repository which distributes packages that are not provided by official repositories.</p>
+
+        <p>To use this repository, install and trust the signing key first.</p>
+
+        <pre><code># pacman-key --keyserver hkp://pgp.mit.edu --recv-keys E21E057C731FE0E27BA391E79E81303CA7470095<br># pacman-key --lsign-key E21E057C731FE0E27BA391E79E81303CA7470095</code></pre>
+
+        <p>Then add the following lines to <code>/etc/pacman.conf</code>:</p>
+
+        <pre><code>[crystal]<br>Server = https://repo.project-ice.org/archlinux/$arch</code></pre>
+    </div>
     <div id="pkglist-results" class="box">
         <h2>Packages</h2>
         {% if package_list %}

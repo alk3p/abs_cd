@@ -34,9 +34,8 @@ SECRET_KEY = get_secret_key()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (helper.get_setting('DEBUG') == 'True')
 
-APPLICATION_URL = helper.get_setting('APPLICATION_URL', "http://localhost")
-ALLOWED_HOSTS = ['127.0.0.1', urlparse(APPLICATION_URL).hostname]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1", "https://127.0.0.1", APPLICATION_URL]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'repo.project-ice.org']
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1", "http://localhost", "https://repo.project-ice.org"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -151,12 +150,13 @@ STATIC_URL = '/static/'
 # Paths set here and not in settings.ini need more manual intervention
 ABS_CD_PROJECT_DIR = "/opt/abs_cd"
 PKGBUILDREPOS_PATH = "/var/packages"
-PKGBUILDREPOS_HOST_PATH = helper.get_setting('PKGBUILDREPOS_HOST_PATH', '/var/local/abs_cd/packages')
+PKGBUILDREPOS_HOST_PATH = "/var/local/abs_cd/packages"
 PACMAN_CONFIG_PATH = "/etc/pacman.conf"
+PACMANREPO_NAME = "crystal"
 PACMANREPO_PATH = "/repo"
-PACMANREPO_HOST_PATH = helper.get_setting('PACMANREPO_HOST_PATH', 'Docker-volume')
-PACMANDB_FILENAME = helper.get_setting('PACMANREPO_NAME', "abs_cd-local") + ".db.tar.zst"
-PACMAN_FILESDB_FILENAME = helper.get_setting('PACMANREPO_NAME', "abs_cd-local") + ".files.tar.zst"
+PACMANREPO_HOST_PATH = "abs_cd_local-repo"
+PACMANDB_FILENAME = "crystal.db.tar.zst"
+PACMAN_FILESDB_FILENAME = "crystal.files.tar.zst"
 
 LOGGING = {
     'version': 1,
