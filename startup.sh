@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-if [ ! -f /repo/abs_cd-local.db.tar.zst ]; then
-    repo-add -n /repo/abs_cd-local.db.tar.zst;
+if [ ! -f /repo/crystal.db.tar.zst ]; then
+    repo-add -n /repo/crystal.db.tar.zst;
 else
     # Remove old versions of packages
-    repo-add -q -R /repo/abs_cd-local.db.tar.zst /repo/*.pkg.tar.zst
+    repo-add -q -R /repo/crystal.db.tar.zst /repo/*.pkg.tar.zst
 fi
 
 python manage.py makemigrations

@@ -1,4 +1,5 @@
 data/settings.ini
 data/db.sqlite3
+makepkg/docker/privkey.asc
 staticfiles/
 tests/

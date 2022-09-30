@@ -38,6 +38,8 @@
             <div id="archnavbarmenu">
                 <ul id="archnavbarlist">
                     <li id="abs-overview"><a href="{% url 'cd_manager:overview' %}">Overview</a></li>
+                    <li id="abs-browse"><a href="https://repo.project-ice.org/archlinux/">Browse</a></li>
+                    <li id="abs-dashboard"><a href="https://repo.project-ice.org/admin/">Dashboard</a></li>
                 </ul>
             </div>
         </div>
@@ -45,6 +47,11 @@
             <div id="archdev-navbar"></div>
             {% block content %}
             {% endblock content %}
+            <div id="footer">
+                <p>Copyleft 2022 Project ICE | Powered by <a href="https://github.com/bionade24/abs_cd">ABS-CD</a></p>
+
+                <p>The Arch Linux name and logo are recognized <a href="https://wiki.archlinux.org/title/DeveloperWiki:TrademarkPolicy">trademarks</a>.</p>
+            </div>
         </div>
     </body>
 </html>

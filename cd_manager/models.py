@@ -134,7 +134,7 @@ def remove_pkgbuild_and_archpkg(sender, instance, using, **kwargs):
     for pkg in packages:
         try:
             logger.debug(f"Trying to remove {pkg} from local repo database")
-            repo_add_output = subprocess.run([REPO_REMOVE_BIN, '-q', '-R', 'abs_cd-local.db.tar.zst', pkg],
+            repo_add_output = subprocess.run([REPO_REMOVE_BIN, '-q', '-R', 'crystal.db.tar.zst', pkg],
                                              stderr=subprocess.PIPE, cwd=settings.PACMANREPO_PATH) \
                                              .stderr.decode('UTF-8').strip('\n')
             if repo_add_output:

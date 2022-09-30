@@ -38,7 +38,7 @@ SECRET_KEY = get_secret_key()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (helper.get_setting('DEBUG') == 'True')
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'repo.project-ice.org']
 
 
 # Application definition
