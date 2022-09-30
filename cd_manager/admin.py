@@ -5,13 +5,12 @@ from django.conf.urls import url
 from django.http.response import HttpResponseRedirect
 from multiprocessing import Process
 from cd_manager.models import Package
-from cd_manager.admin_site import site
 
 
 # Register your models here.
 
 
-@admin.register(Package, site=site)
+@admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
     list_display = ('name', 'build_status',
                     'build_date',

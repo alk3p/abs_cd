@@ -30,8 +30,6 @@ class Package(models.Model):
                                     default='NOT_BUILT', max_length=10)
     build_date = models.DateTimeField(null=True, blank=True)
     build_output = models.TextField(null=True, blank=True)
-    aur_push = models.BooleanField(default=False)
-    aur_push_output = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -71,12 +69,6 @@ class Package(models.Model):
     def run_cd(self):
         self.pkgbuild_repo_status_check()
         PackageSystem().build(self)
-        if self.build_status == 'SUCCESS' and self.aur_push:
-            self.push_to_aur()
-        else:
-            if not self.aur_push and self.aur_push_output:
-                self.aur_push_output = None
-                self.save()
 
     def build(self, force_rebuild=False, built_packages=[], repo_status_check=True):
         # As the dependency graph is not necessarily acyclic we have to make sure to check each node
@@ -121,24 +113,6 @@ class Package(models.Model):
 
     def rebuildtree(self, built_packages=[]):
         self.build(force_rebuild=True, built_packages=built_packages)
-
-    def push_to_aur(self):
-        path = os.path.join(
-            settings.PKGBUILDREPOS_PATH, self.name)
-        try:
-            pkg_repo = Repo(path=path).remote(name='aur')
-        except ValueError:
-            pkg_repo = Repo(path=path).create_remote(
-                'aur', "aur@aur.archlinux.org:/{0}.git".format(self.name))
-        pkg_repo.fetch()
-        try:
-            info = pkg_repo.push()[0]
-            self.aur_push_output = str(info.summary)
-        except GitCommandError as e:
-            logger.warning(self.name + " has AUR push problems: ")
-            self.aur_push_output = str(e)
-        finally:
-            self.save()
 
 
 @receiver(pre_delete, sender=Package)

@@ -33,8 +33,7 @@ class TestALPMHelper(TestCase):
                 "lmdbxx"]
         for package in pkgs:
             Package.objects.create(name=package,
-                                   repo_url=f"https://aur.archlinux.org/{package}.git",
-                                   aur_push=False)
+                                   repo_url=f"https://aur.archlinux.org/{package}.git")
 
     # A ROS package with very minimal depencencies
     def test_ros_melodic_genmsg(self):

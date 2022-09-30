@@ -14,6 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+
+# Disable the navigation sidebar feature.
+# Reference: https://stackoverflow.com/a/63314138
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
+
 from django.urls import path, include
 from django.views.generic import RedirectView
 
