@@ -1,47 +1,47 @@
 {% extends 'base_abs-cd.html' %}
 
 {% block style %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'cd_manager/package_list.css' %}">
+    <style>#abs-overview > a {
+        color: white!important;
+    }</style>
 {% endblock style %}
 
 {% block content %}
-    <h2>Package build status overview</h2>
-    </br>
-    <hr>
-    {% if package_list %}
-        <table>
-		<tr>
-		{% for sort_link in sort_link_list %}
-			<th class="sort-link {{sort_link.attrs }}">
-				<a class = "pkglist_header" href="{{ sort_link.path }}">
-					<span class="{{ sort_link.indicator }}">
-    						{{ sort_link.title }}
-    						{% if sort_link.indicator == 'sort-asc' %}▲{% endif %}
-    						{% if sort_link.indicator == 'sort-desc' %}▼{% endif %}
-					</span>
-				</a>
-			</th>
-		{% endfor %}
-		</tr>
-		<tr>  </tr>
-            {% for package in package_list %}
-                <tr>
-                    <td class="pkgname"><a href="{% url 'cd_manager:package' package.name %}">{{ package.name}}</a></td>
-                    <td> <span class=
-                    {% if package.build_status == 'SUCCESS' %}
-                        "success"
-                    {% elif package.build_status == 'FAILURE' %}
-                         "failure"
-                    {% else %}
-                        "other"
-                    {% endif %}
-                    >{{ package.build_status }}</span></td>
-                    <td>{{ package.build_date|date:'d.n.Y H:i' }}</td>
-                </tr>
-            {% endfor %}
+    <div id="pkglist-results" class="box">
+        <h2>Packages</h2>
+        {% if package_list %}
+            <table class="results">
+                <thead>
+                    <tr>
+                        <th><a href="{{ sort_link_list.0.path }}" class="pkglist_header">Name</a></th>
+                        <th>Version</th>
+                        <th>Description</th>
+                        <th><a href="{{ sort_link_list.2.path }}" class="pkglist_header">Last Updated</a></th>
+                        <th><a href="{{ sort_link_list.1.path }}" class="pkglist_header">Build status</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for package in package_list %}
+                    <tr>
+                        <td><a href="{% url 'cd_manager:package' package.name %}">{{ package.name }}</a></td>
+                        <td>{{ package.version }}</td>
+                        <td class="wrap">{{ package.desc }}</td>
+                        <td>{{ package.build_date|date:'Y-m-d H:i' }}</td>
+                        <td>
+                            <span class=
+                                {% if package.build_status == 'SUCCESS' %}
+                                    "success"
+                                {% elif package.build_status == 'FAILED' %}
+                                    "failed"
+                                {% else %}
+                                    "other"
+                                {% endif %}
+                            >{{ package.build_status }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
         </table>
-    {% else %}
-        <p style="color: red">There are no package repos available or indexed.</p>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock content %}

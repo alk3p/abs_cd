@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='package',
             name='build_status',
-            field=models.CharField(choices=[('SUCCESS', 'Success'), ('FAILURE', 'Failure'), ('NOT_BUILT', 'Not Built'), ('BUILDING', 'Building'), ('PREPARING', 'Preparing'), ('WAITING', 'Waiting')], default='NOT_BUILT', max_length=10),
+            field=models.CharField(choices=[('SUCCESS', 'Success'), ('FAILED', 'Failed'), ('NOT_BUILT', 'Not Built'), ('BUILDING', 'Building'), ('PREPARING', 'Preparing'), ('WAITING', 'Waiting')], default='NOT_BUILT', max_length=10),
         ),
     ]

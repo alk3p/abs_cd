@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.conf import settings
 from cd_manager import models
+from cd_manager.alpm import ALPMHelper
 from .docker_conn import Connection
 
 
@@ -53,6 +54,9 @@ class PackageSystem:
 
     # pkgbase should be type cd_manager.models.Package()
     def build(self, pkgbase, user, makepkg_args=""):
+        pkgbase.version = ALPMHelper.get_srcinfo(pkgbase.name).getcontent()['pkgver'] \
+            + '-' + ALPMHelper.get_srcinfo(pkgbase.name).getcontent()['pkgrel']
+        pkgbase.desc = ALPMHelper.get_srcinfo(pkgbase.name).getcontent()['pkgdesc']
         pkgbase.build_status = 'BUILDING'
         pkgbase.build_output = None
         pkgbase.save()
@@ -105,10 +109,10 @@ class PackageSystem:
                 except subprocess.CalledProcessError:
                     logger.exception("Updating the repo database failed:")
             else:
-                pkgbase.build_status = 'FAILURE'
+                pkgbase.build_status = 'FAILED'
 
         except docker.errors.ContainerError as e:
-            pkgbase.build_status = 'FAILURE'
+            pkgbase.build_status = 'FAILED'
             container_output = e.container.logs()
             try:
                 build_res = json.loads(container_output)
