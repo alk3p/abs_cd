@@ -17,13 +17,6 @@ BUILDCONT_IMG = 'abs_cd/makepkg'
 logger = logging.getLogger(__name__)
 
 
-def get_pacmanrepo_host_path():
-    if settings.PACMANREPO_HOST_PATH == 'Docker-volume':
-        return Connection().volumes.list(filters={"label": "com.docker.compose.volume=local-repo"})[0].name
-    else:
-        return settings.PACMANREPO_HOST_PATH
-
-
 class PackageSystem:
 
     def __init__(self):
@@ -73,7 +66,7 @@ class PackageSystem:
                                             cpu_shares=settings.D_CPU_SHARES,
                                             volumes={os.path.join(settings.PKGBUILDREPOS_HOST_PATH, pkgbase.name):
                                                      {'bind': '/src', 'mode': 'ro'},
-                                                     get_pacmanrepo_host_path():
+                                                     settings.PACMANREPO_HOST_PATH:
                                                      {'bind': settings.PACMANREPO_PATH, 'mode': 'rw'},
                                                      '/var/cache/pacman/pkg':
                                                      {'bind': '/var/cache/pacman/pkg', 'mode': 'rw'},
