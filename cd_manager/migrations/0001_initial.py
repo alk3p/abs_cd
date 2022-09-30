@@ -19,7 +19,6 @@ class Migration(migrations.Migration):
                 ('build_status', models.CharField(choices=[('SUCCESS', 'Success'), ('FAILURE', 'Failure'), ('NOT_BUILT', 'Not Built')], default='NOT_BUILT', max_length=10)),
                 ('build_date', models.DateTimeField(blank=True)),
                 ('build_output', models.TextField(blank=True)),
-                ('aur_push', models.BooleanField(default=False)),
             ],
         ),
     ]

@@ -6,13 +6,12 @@ from django.http.response import HttpResponseRedirect
 from multiprocessing import Process
 from cd_manager.models import Package, GpgKey
 from cd_manager.forms import GpgKeySubmitForm
-from cd_manager.admin_site import site
 
 
 # Register your models here.
 
 
-@admin.register(Package, site=site)
+@admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
     list_display = ('name', 'build_status',
                     'build_date',
@@ -59,7 +58,7 @@ class PackageAdmin(admin.ModelAdmin):
         return HttpResponseRedirect('/admin/cd_manager/package/?o=2.1')
 
 
-@admin.register(GpgKey, site=site)
+@admin.register(GpgKey)
 class GpgKeyAdmin(admin.ModelAdmin):
     # If the GpgKeySubmitForm is changed, change add_fieldsets accordingly
     add_fieldsets = (

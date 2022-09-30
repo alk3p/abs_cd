@@ -40,15 +40,16 @@ CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1", "https://127.0.0.1", APPLICATION_URL
 
 # Application definition
 INSTALLED_APPS = [
-    'cd_manager.apps.Abs_cd_AdminSite',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sessions',
     'django.contrib.staticfiles',
     'django_crontab',
     'sortable_listview',
-    'cd_manager.apps.CdManagerConfig']
+    'cd_manager.apps.CdManagerConfig'
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

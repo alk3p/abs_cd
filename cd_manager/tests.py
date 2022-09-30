@@ -39,8 +39,7 @@ class TestALPMHelper(TestCase):
                 "lmdbxx"]
         for package in pkgs:
             Package.objects.create(name=package,
-                                   repo_url=f"file://{os.getcwd()}/tests/pkgbuild_remote/{package}",
-                                   aur_push=False)
+                                   repo_url=f"file://{os.getcwd()}/tests/pkgbuild_remote/{package}")
         print(Package.objects.all())
 
     # A ROS package with very minimal depencencies
