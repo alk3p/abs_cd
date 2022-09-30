@@ -54,29 +54,6 @@
 
 <hr>
 
-{% if package.aur_push %}
-<table>
-  <thead>
-    <tr>
-      <th>Git push to AUR Output</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <div id="aur_push_output" class="console_output">
-          {% if package.aur_push_output %}
-          {{ package.aur_push_output|linebreaksbr}}
-          {% else %}
-          There is no aurpush output available.
-          {% endif %}
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-{% endif %}
-
 {% endblock content %}
 {% endautoescape %}
 

@@ -1,6 +1,5 @@
 import sys
 from django.apps import AppConfig
-from django.contrib.admin.apps import AdminConfig
 
 
 class CdManagerConfig(AppConfig):
@@ -15,7 +14,3 @@ class CdManagerConfig(AppConfig):
             for pkg in pkgs:
                 pkg.build_status = "NOT_BUILT"
                 pkg.save()
-
-
-class Abs_cd_AdminSite(AdminConfig):
-    default_site = 'cd_manager.admin_site.get_site'

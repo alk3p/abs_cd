@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cd_manager', '0007_package_aur_push_output'),
+        ('cd_manager', '0006_auto_20200912_1158'),
     ]
 
     operations = [

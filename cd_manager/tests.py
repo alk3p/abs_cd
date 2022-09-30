@@ -40,8 +40,7 @@ class TestALPMHelper(TestCase):
         for package in pkgs:
             Package.objects.create(name=package,
                                    # Git clone file://path/to/repo.bundle doesn't work
-                                   repo_url=f"{os.getcwd()}/tests/pkgbuild_remote/{package}.bundle",
-                                   aur_push=False)
+                                   repo_url=f"{os.getcwd()}/tests/pkgbuild_remote/{package}.bundle")
         print(Package.objects.all())
 
     # A ROS package with very minimal depencencies
