@@ -12,6 +12,7 @@ RUN apk add --update --no-cache \
         py3-pip \
         py3-syslog-ng \
         py3-wheel \
+        tini \
         zstd; \
     pacman-key --init; \
     apk add --no-cache --virtual .build-deps \
@@ -46,4 +47,4 @@ VOLUME /repo /var/packages /opt/abs_cd/data /opt/abs_cd/staticfiles
 EXPOSE 8000
 WORKDIR /opt/abs_cd
 
-ENTRYPOINT ["bash", "startup.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "./startup.sh"]
