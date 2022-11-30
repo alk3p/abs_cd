@@ -1,3 +1,0 @@
-Host github.com
-  IdentityFile /opt/abs_cd/data/github
-  User git
