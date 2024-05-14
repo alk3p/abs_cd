@@ -23,7 +23,7 @@ RUN apk add --update --no-cache \
         python3-dev; \
     python3 -m pip install \
         bjoern>=3.2.2 \
-        Django==3.2.13 \
+        Django==3.2.25 \
         django-sortable-listview==0.43 \
         django-crontab==0.7.1 \
         docker>=4.3.1 \
