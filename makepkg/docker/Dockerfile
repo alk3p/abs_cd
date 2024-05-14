@@ -6,7 +6,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen; \
     pacman-key --keyserver hkp://keyserver.ubuntu.com --recv-keys E21E057C731FE0E27BA391E79E81303CA7470095; \
     pacman-key --lsign-key E21E057C731FE0E27BA391E79E81303CA7470095; \
     systemd-machine-id-setup; \
-    pacman --noconfirm -Syuq --needed devtools python && rm /var/cache/pacman/pkg/*; \
+    pacman --noconfirm -Syuq --needed devtools meson-python && rm /var/cache/pacman/pkg/*; \
     useradd -m -d /build -s /bin/bash mkpkg; \
     echo -e 'root ALL=(ALL) ALL\nmkpkg ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers; \
     mkdir -p /build/.gnupg; \
