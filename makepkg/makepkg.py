@@ -93,12 +93,6 @@ class PackageSystem:
                                                      .stderr.decode('UTF-8').strip('\n')
                     if repo_add_output:
                         logger.warning(repo_add_output)
-                    if key:
-                        try:
-                            key.sign(os.path.join(settings.PACMANREPO_PATH, settings.PACMANDB_FILENAME))
-                            key.sign(os.path.join(settings.PACMANREPO_PATH, settings.PACMAN_FILESDB_FILENAME))
-                        except gpg.errors.GpgError:
-                            logger.exception("Error while signing repo databases:")
                 except subprocess.CalledProcessError:
                     logger.exception("Updating the repo database failed:")
             else:
