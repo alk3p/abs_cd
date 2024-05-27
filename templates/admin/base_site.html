@@ -5,3 +5,11 @@
 {% block branding %}
 <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ 'ArchBuildSystem Continuous Delivery' }}</a></h1>
 {% endblock %}
+
+{% block extrastyle %}
+<style>
+#site-name, #site-name a:link, #site-name a:visited {
+    color: #fff;
+}
+</style>
+{% endblock %}
