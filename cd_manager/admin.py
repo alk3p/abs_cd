@@ -1,6 +1,8 @@
 import multiprocessing as mp
 from django.contrib import admin
+from django.utils.decorators import method_decorator
 from django.utils.html import format_html
+from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.urls import re_path
 from django.http.response import HttpResponseRedirect
@@ -38,20 +40,22 @@ class PackageAdmin(admin.ModelAdmin):
 
     def package_actions(self, obj):
         return format_html(
-            '<a class="button" href="{}">Build Package</a>&nbsp;'
-            '<a class="button" href="{}">Rebuild Dep Tree</a>',
+            '<button type="submit" class="button" formmethod="post" formaction="{}">Build Package</button>&nbsp;'
+            '<button type="submit" class="button" formmethod="post" formaction="{}">Rebuild Dep Tree</button>',
             reverse('admin:build', args=[obj.pk]),
             reverse('admin:rebuildtree', args=[obj.pk]),
         )
     package_actions.short_description = 'Package Actions'
     package_actions.allow_tags = True
 
+    @method_decorator(require_POST)
     def build(self, request, package_name, *args, **kwargs):
         request.current_app = self.admin_site.name
         pkg = Package.objects.get(name=package_name)
         mp.Process(target=pkg.build, args=[request.user]).start()
         return HttpResponseRedirect('/admin/cd_manager/package/?o=2.1')
 
+    @method_decorator(require_POST)
     def rebuildtree(self, request, package_name, *args, **kwargs):
         request.current_app = self.admin_site.name
         pkg = Package.objects.get(name=package_name)
