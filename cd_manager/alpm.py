@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Callable
 from typing import Optional
 from pycman.config import PacmanConfig
+from cd_manager.package_paths import pkgbuild_repos_path
 from cd_manager.pkgbuild import SRCINFO
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -47,7 +48,7 @@ class ALPMHelper:
 
     @staticmethod
     def get_srcinfo(pkgname: str):
-        srcinfo_path = os.path.join(settings.PKGBUILDREPOS_PATH, pkgname, '.SRCINFO')
+        srcinfo_path = os.path.join(pkgbuild_repos_path(pkgname), '.SRCINFO')
         if not os.path.isfile(srcinfo_path):
             try:
                 from cd_manager.models import Package

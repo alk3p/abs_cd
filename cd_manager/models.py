@@ -11,7 +11,9 @@ from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth.models import User, AnonymousUser
 from cd_manager.alpm import ALPMHelper
+from cd_manager.package_paths import pkgbuild_repos_path
 from cd_manager.recursion_helper import Recursionlimit
+from cd_manager.validators import validate_pkgname
 from makepkg import makepkg
 from datetime import timedelta, datetime
 from git import Repo
@@ -26,7 +28,7 @@ REPO_REMOVE_BIN = "/usr/bin/repo-remove"
 class Package(models.Model):
     BuildStatus = models.TextChoices(
         'BuildStatus', 'SUCCESS FAILED NOT_BUILT BUILDING PREPARING WAITING')
-    name = models.CharField(max_length=100, primary_key=True)
+    name = models.CharField(max_length=50, primary_key=True, validators=[validate_pkgname])
     version = models.CharField(max_length=80)
     desc = models.TextField(null=True, blank=True)
     repo_url = models.CharField(max_length=100)
@@ -39,9 +41,13 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        validate_pkgname(self.name)
+        return super().save(*args, **kwargs)
+
     def pkgbuild_repo_status_check(self):
         # Returns True if repo changed
-        package_src = os.path.join(settings.PKGBUILDREPOS_PATH, self.name)
+        package_src = pkgbuild_repos_path(self.name)
         if not os.path.exists(package_src):
             Repo.clone_from(self.repo_url, package_src)
             return True
@@ -73,6 +79,7 @@ class Package(models.Model):
         return False
 
     def build(self, user: User = AnonymousUser, force_rebuild=False, scheduled_cd_pkgs=None, repo_status_check=True):
+        pkgbuild_repos_path(self.name)
         # As the dependency graph is not necessarily acyclic we have to make sure to check each node
         # only once. Otherwise this might end up in an endless loop (meaning we will hit the
         # recursion limit)
@@ -147,7 +154,7 @@ class Package(models.Model):
 
 @receiver(pre_delete, sender=Package)
 def remove_pkgbuild_and_archpkg(sender, instance, using, **kwargs):
-    package_src = os.path.join(settings.PKGBUILDREPOS_PATH, instance.name)
+    package_src = pkgbuild_repos_path(instance.name)
     if os.path.exists(package_src):
         srcinfo = ALPMHelper.get_srcinfo(instance.name).getcontent()
         packages = srcinfo['pkgname']

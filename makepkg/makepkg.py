@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.conf import settings
 from cd_manager import models
 from cd_manager.alpm import ALPMHelper
+from cd_manager.package_paths import pkgbuild_repos_host_path
 from .docker_conn import Connection
 
 
@@ -64,7 +65,7 @@ class PackageSystem:
                 Connection().containers.run(image=BUILDCONT_IMG, command=(makepkg_args),
                                             remove=False, mem_limit=settings.D_MEM_LIMIT, memswap_limit=settings.D_SWAP_LIMIT,
                                             cpu_shares=settings.D_CPU_SHARES,
-                                            volumes={os.path.join(settings.PKGBUILDREPOS_HOST_PATH, pkgbase.name):
+                                            volumes={pkgbuild_repos_host_path(pkgbase.name):
                                                      {'bind': '/src', 'mode': 'ro'},
                                                      settings.PACMANREPO_HOST_PATH:
                                                      {'bind': settings.PACMANREPO_PATH, 'mode': 'rw'},
